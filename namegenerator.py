@@ -35,13 +35,23 @@ class NameGenerator:
             return [line.strip() + " " for line in f]
 
     def generate_names(self):
-        
-        num_names = simpledialog.askinteger("Input", "How many names do you want to generate?", parent=self.master)
-        for _ in range(num_names):
-            generated_name = first_name + random.choice(self.names) + random.choice(self.names) + last_name
-            self.generated_names.append(generated_name)
-        self.show_next_name()
+        def generate_names_helper(file_path):
+            num_names = simpledialog.askinteger("Input", "How many names do you want to generate?", parent=self.master)
+            with open(file_path, 'r') as f:
+                names = [line.strip() + " " for line in f]
 
+            for _ in range(num_names):
+                generated_name = first_name + random.choice(names) + random.choice(names) + last_name
+                self.generated_names.append(generated_name)
+            self.show_next_name()
+
+        button_pressed = messagebox.askquestion("Input", "Do you want to generate boy names?", parent=self.master)
+        if button_pressed == 'yes':
+            file_path = os.path.join(os.path.dirname(__file__), 'boynames.txt')
+        else:
+            file_path = os.path.join(os.path.dirname(__file__), 'girlnames.txt')
+
+        generate_names_helper(file_path)
     def save_name(self):
         file_path = os.path.join(os.path.dirname(__file__), 'generated_names.txt')
         with open(file_path, 'a') as f:
