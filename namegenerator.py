@@ -3,6 +3,9 @@ import os
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 
+first_name = "Firstname " #you can replace these names, be sure to add a space at the end of the Firstname
+last_name = "Lastname"
+
 class NameGenerator:
     def __init__(self, master):
         self.master = master
@@ -32,8 +35,7 @@ class NameGenerator:
             return [line.strip() + " " for line in f]
 
     def generate_names(self):
-        first_name = "Chloe "
-        last_name = "Cornelissen"
+        
         num_names = simpledialog.askinteger("Input", "How many names do you want to generate?", parent=self.master)
         for _ in range(num_names):
             generated_name = first_name + random.choice(self.names) + random.choice(self.names) + last_name
